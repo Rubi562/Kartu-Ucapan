@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kartu Cinta Lucu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.ibb.co/ZxLxXMS/romantic-night.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .start-screen, .main-card, .end-screen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: brightness(0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      transition: opacity 1s ease;
+      z-index: 1;
+    }
+
+    .start-screen {
+      z-index: 3;
+    }
+
+    .main-card {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .end-screen {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .active .main-card {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .active .start-screen {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ended .main-card {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ended .end-screen {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    button {
+      padding: 14px 30px;
+      background: #ff4d6d;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-size: 1.1em;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: #e03a58;
+    }
+
+    .typing-text {
+      font-size: 1.6em;
+      color: white;
+      height: 1.6em;
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 2.5s steps(20), blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 700px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .card img {
+      max-width: 200px;
+      border-radius: 50%;
+      margin: 10px auto;
+      animation: popIn 1s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .card h1 {
+      color: #d63384;
+    }
+
+    .card p {
+      font-size: 1.1em;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .emoji {
+      font-size: 2em;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: fall 6s infinite;
+      z-index: 0;
+    }
+
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+        transform: translateX(0) rotate(0deg);
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateX(50px) rotate(360deg);
+      }
+    }
+
+    .floating-text {
+      animation: floatText 2s ease-in-out infinite alternate;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.6em;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    @keyframes floatText {
+      from { transform: translateY(0); }
+      to { transform: translateY(-15px); }
+    }
+
+    /* Kartun lucu */
+    .animal {
+      position: fixed;
+      width: 100px;
+      height: auto;
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    .animal.cat {
+      bottom: 10px;
+      left: 10px;
+    }
+
+    .animal.rabbit {
+      bottom: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animasi kartun lucu -->
+<img class="animal cat" src="https://ibb.co/8LrtnzzH">
+<img class="animal rabbit" src="https://ibb.co/8LrtnzzH">
+
+<div class="start-screen">
+  <div class="typing-text">Hai Cantik... 💕</div>
+  <br><br>
+  <button onclick="startCard()">Coba Klik Disini</button>
+</div>
+
+<div class="main-card">
+  <div class="card">
+    <img src="https://ibb.co/gLWkRRrs">
+    <h1>Semanagat Kerjanya Sayang ❤️</h1>
+    <div class="emoji">😊</div>
+    <p>
+      Selamat Hari Potong Kambing wkwkwk<br>
+      Taun Depan Kalo Udah balik Ikut Bakar2 Dirumahku ya<br>
+      Ibu pengen kenalan katanya wkwkwk 🐱🐰💕
+    </p>
+    <em>— Kalo Balik Jangan Lupa Bawa Milo hahaha 💖</em>
+    <br><br>
+    <button onclick="endCard()">Lanjut ➡️</button>
+  </div>
+</div>
+
+<div class="end-screen">
+  <div class="floating-text">Peluk dari Jauh... 🤗❤️</div>
+  <br>
+  <div class="emoji" style="font-size: 3em;">💞</div>
+</div>
+
+<script>
+  function startCard() {
+    document.body.classList.add("active");
+  }
+
+  function endCard() {
+    document.body.classList.add("ended");
+  }
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
